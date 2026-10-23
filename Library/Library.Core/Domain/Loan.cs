@@ -11,6 +11,7 @@ namespace Library.Core.Domain
         public Guid ReaderId { get; set; }
         public DateTime LoanDate{ get; set; }
         public DateTime ReturnDate{ get; set; }
+        
 
     }
 }
