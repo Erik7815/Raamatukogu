@@ -1,0 +1,41 @@
+﻿@model Library.Models.BookCreateViewModel
+
+<h1>Add book</h1>
+
+
+<form method="post" enctype="multipart/form-data">
+    <input asp-for="Id" type="hidden" />
+
+
+    <div>
+        <label asp-for="Title" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Title" class="form-control" />
+        </div>
+    </div>
+
+    <div>
+        <label asp-for="Author" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Author" class="form-control" />
+        </div>
+    </div>
+
+    <div>
+        <label asp-for="PublishedYear" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="PublishedYear" class="form-control" />
+        </div>
+    </div>
+
+
+    <a asp-action="Index" asp-controller="Book" class="btn btn-outline-secondary btn-lg rounded-3">
+     Back to Library
+</a>
+
+<button type="submit" class="btn btn-primary btn-lg rounded-3 px-4">
+    Add Book
+</button>
+
+    </form>
+     
