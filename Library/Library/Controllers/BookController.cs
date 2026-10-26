@@ -21,9 +21,25 @@ namespace Library.Controllers
                 _context = context;
             }
 
-            public IActionResult Index()
+            public IActionResult Index(string? year, string? title, bool borrowed = false)
             {
             var books = _context.Books.ToList();
+            var sorting = new LINQSort();
+
+            if (!string.IsNullOrWhiteSpace(year))
+            {
+                books = sorting.BooksByYear(books, year);
+            }
+
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                books = sorting.BooksByTitle(books, title.Trim());
+            }
+
+            if (borrowed)
+            {
+                books = sorting.UnavaliableBooks(books);
+            }
             var result = books.Select(x => new BookIndexViewModel
                 {
                     Id = x.Id,
@@ -32,7 +48,9 @@ namespace Library.Controllers
                     PublishedYear = x.PublishedYear,
                     IsAvailable = x.IsAvailable
                 }).ToList();
-
+            ViewBag.SearchYear = year;
+            ViewBag.SearchTitle = title;
+            ViewBag.BorrowedOnly = borrowed;
 
 
                 return View(result);
