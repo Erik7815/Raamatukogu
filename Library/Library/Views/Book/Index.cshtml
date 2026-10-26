@@ -18,12 +18,14 @@
                 <th scope="col">Nr</th>
                 <th scope="col">Title</th>
                 <th scope="col">Author</th>
-                <th scope="col">Built Date</th>
-                <th scope="col">Crew</th>
+                <th scope="col">Year published</th>
+                <th scope="col">Available</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
+            @if (Model.Any())
+            {
             @foreach (var book in Model)
             {
                 <tr>
@@ -39,8 +41,24 @@
 
                     </td>
                 </tr>
-                rowNumber++;
-            }
-        </tbody>
+                <tr>
+                    
+                       @rowNumber++;
+                    
+                </tr>
+                
+                    }
+                }
+                else
+                {
+                    <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <div class="display-4 mb-3"></div>
+                                <h5 class="fw-bold">Your library is empty</h5>
+                                
+                            </td>
+                        </tr>
+                }
+            </tbody>
     </table>
 </form>
