@@ -1,0 +1,35 @@
+﻿@model Library.Models.ReaderCreateViewModel
+
+<h1>Add reader</h1>
+
+
+<form method="post" enctype="multipart/form-data">
+    <input asp-for="Id" type="hidden" />
+
+
+    <div>
+        <label asp-for="FullName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="FullName" class="form-control" />
+        </div>
+    </div>
+
+    <div>
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" />
+        </div>
+    </div>
+
+
+    <a asp-action="Index" asp-controller="Reader" class="btn btn-outline-secondary btn-lg rounded-3">
+        Back
+    </a>
+
+    <button type="submit" class="btn btn-primary btn-lg rounded-3 px-4">
+        Add Reader
+    </button>
+
+</form>
+
+     

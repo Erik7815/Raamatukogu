@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Library.Models.ReaderIndexViewModel>
+
+@{
+    int rowNumber = 1;
+}
+
+<div>
+    <a asp-action="Create" asp-controller="Reader" type="submit" class="btn btn-primary">Create</a>
+</div>
+
+<div class="h1">
+    Readers
+</div>
+<form method="get">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Nr</th>
+                <th scope="col">Full name</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <td>@rowNumber</td>
+                        <td>@book.FullName</td>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+
+                        rowNumber++;
+
+                    </tr>
+
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center py-5">
+                        <div class="display-4 mb-3"></div>
+                        <h5 class="fw-bold">NO readers</h5>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

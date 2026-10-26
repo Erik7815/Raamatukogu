@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Library.Models;
 using Library.Data;
-using Library.ApplicationServices.Services;
 using Library.Core.ServiceInterface;
 using Library.Core.Dto;
 
@@ -22,6 +21,23 @@ namespace Library.Controllers
                 _context = context;
             }
 
+            public IActionResult Index()
+            {
+            var books = _context.Books.ToList();
+            var result = books.Select(x => new BookIndexViewModel
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Author = x.Author,
+                    PublishedYear = x.PublishedYear,
+                    IsAvailable = x.IsAvailable
+                }).ToList();
+
+
+
+                return View(result);
+            }
+
             [HttpGet]
             public IActionResult Create()
             {
@@ -29,25 +45,7 @@ namespace Library.Controllers
 
                 return View(vm);
             }
-            public IActionResult Index()
-            {
-                var result = _context.Books
-                .Select(x => new BookIndexViewModel
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    Author = x.Author,
-                    PublishedYear = x.PublishedYear,
-                    IsAvailable = x.IsAvailable
-                });
-
-
-
-                return View(result);
-            }
-
-            // kui oled teinud vormi, siis see meetod käivitatakse
-            // saadab andmed serverisse, kus need salvestatakse andmebaasi
+           
             [HttpPost]
             public async Task<IActionResult> Create(BookCreateViewModel vm)
             {
@@ -70,5 +68,75 @@ namespace Library.Controllers
                 }
                 return View(vm);
             }
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var book = await _context.Books.FindAsync(id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new BookDeleteViewModel
+            {
+                Id = book.Id,
+                Title = book.Title,
+                Author = book.Author,
+                PublishedYear = book.PublishedYear,
+                IsAvailable = book.IsAvailable
+            };
+
+            return View(vm);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirm(Guid id)
+        {
+            var result = await _bookServices.Delete(id);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var book = await _context.Books.FindAsync(id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new BookUpdateViewModel();
+            {
+                vm.Id = book.Id;
+                vm.Title = book.Title;
+
+                return View(vm);
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(BookUpdateViewModel vm)
+        {
+            var dto = new BookDto()
+            {
+                Id = vm.Id,
+                Title = vm.Title
+            };
+
+            var result = await _bookServices.Update(dto);
+
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+    }
 }

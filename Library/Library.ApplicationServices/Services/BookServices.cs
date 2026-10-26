@@ -2,7 +2,7 @@
 using Library.Core.Domain;
 using Library.Core.ServiceInterface;
 using Library.Data;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Library.ApplicationServices.Services
 {
@@ -29,6 +29,38 @@ namespace Library.ApplicationServices.Services
             await _context.SaveChangesAsync();
 
             return domain;
+        }
+        public async Task<Book?> Delete(Guid id)
+        {
+            var result = await _context.Books
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (result == null)
+            {
+                return null;
+            }
+
+            _context.Books.Remove(result);
+            await _context.SaveChangesAsync();
+
+            return result;
+        }
+        public async Task<Book> Update(BookDto dto)
+        {
+            var books = await _context.Books
+                .FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+            if (books == null)
+            {
+                return null;
+            }
+
+            books.Id = dto.Id;
+            books.Title = dto.Title;
+
+            await _context.SaveChangesAsync();
+
+            return books;
         }
     }
 }

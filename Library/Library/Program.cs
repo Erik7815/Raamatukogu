@@ -17,10 +17,9 @@ namespace Library
 
 
 
-            // Seadistame andmebaasiühenduse appsettings.json failis oleva ConnectionStrings abil.
             builder.Services.AddDbContext<LibraryContext>(options =>
                 options.UseSqlServer(
-                    builder.Configuration.GetConnectionString("LibraryContext")));
+                    builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
