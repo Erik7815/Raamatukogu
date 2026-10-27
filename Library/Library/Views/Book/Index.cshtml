@@ -4,9 +4,7 @@
     int rowNumber = 1;
 }
 
-<div>
-    <a asp-action="Create" asp-controller="Book" type="submit" class="btn btn-primary">Create</a>
-</div>
+
 
 <div class="h1">
     Books
@@ -43,6 +41,10 @@
         <div class="d-flex gap-2 mt-3">
             <button type="submit" class="btn btn-primary rounded-3">Search</button>
         </div>
+        <p></p>
+        <div>
+        <a asp-action="Create" asp-controller="Book" type="submit" class="btn btn-primary">Create</a>
+    </div>
     </div>
 </form>
 
@@ -75,11 +77,11 @@
 
                     </td>
                 </tr>
-                <tr>
+                
                     
-                       @rowNumber++;
+                       rowNumber++;
                     
-                </tr>
+                
                 
                     }
                 }
